@@ -1,7 +1,15 @@
 {
+  "scripts": {
+    "dev": "meta dev",
+    "build": "meta build"
+  },
   "devDependencies": {
-    "@effortlessmotion/html-webpack-inline-source-plugin": "^1.0.3",
     "@studiometa/webpack-config": "^4.2.0-alpha.3",
-    "html-webpack-inline-source-plugin": "^0.0.10"
+    "monaco-editor-webpack-plugin": "^7.0.1"
+  },
+  "dependencies": {
+    "@studiometa/js-toolkit": "^2.7.0",
+    "esbuild-wasm": "^0.16.17",
+    "monaco-editor": "^0.34.1"
   }
 }

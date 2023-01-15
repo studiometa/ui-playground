@@ -3,16 +3,88 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Code</title>
+		<title>Code Editor</title>
 	</head>
-	<body>
+	<body class="group dark:bg-zinc-900 dark:text-white">
 		<main class="fixed top-0 left-0 w-full h-full">
-			<div class="absolute top-0 left-0 flex items-stretch w-full h-1/3 shadow">
-				<pre class="w-1/3 p-4 overflow-auto " id="__html" contenteditable></pre>
-				<pre class="w-1/3 p-4 overflow-auto border-l" id="__style" contenteditable></pre>
-				<pre class="w-1/3 p-4 overflow-auto border-l" id="__script" contenteditable></pre>
+			<div class="z-10 absolute top-0 flex gap-4 w-full p-2 leading-4 bg-zinc-50 dark:bg-zinc-800 text-sm border-b dark:border-b-zinc-700">
+				Code Editor
+
+				<div>
+					Editors
+					<label for="html-editor">
+						<input
+							data-ref="htmlEditorVisibility"
+							type="checkbox"
+							name="html-editor"
+							checked
+						/>
+						HTML
+					</label>
+					<label for="script-editor">
+						<input
+							data-ref="scriptEditorVisibility"
+							type="checkbox"
+							id="script-editor"
+							name="script-editor"
+							checked
+						/>
+						JS
+					</label>
+				</div>
+
+				<div data-component="LayoutSwitcher">
+					Layout
+					<label for="layout-horizontal">
+						<input data-ref="inputs[]" type="radio" name="layout" id="layout-horizontal" value="horizontal" checked>
+						Horizontal
+					</label>
+					<label for="layout-vertical">
+						<input data-ref="inputs[]" type="radio" name="layout" id="layout-vertical" value="vertical">
+						Vertical
+					</label>
+				</div>
+
+				<div data-component="ThemeSwitcher">
+					Theme
+					<label for="theme-light">
+						<input type="radio" name="theme" id="theme-light" value="light" checked>
+						Light
+					</label>
+					<label for="theme-dark">
+						<input type="radio" name="theme" id="theme-dark" value="dark">
+						Dark
+					</label>
+				</div>
 			</div>
-			<iframe class="absolute bottom-0 left-0 w-full h-2/3" id="__iframe" src="about:blank" srcdoc="" frameborder="0"></iframe>
+			<div class="absolute top-0 left-0 flex flex-col w-full h-1/3 group-[.is-vertical]:w-2/5 group-[.is-vertical]:h-full mt-8 border-b dark:border-b-zinc-700">
+				<div class="flex group-[.is-vertical]:flex-col flex-grow flex-wrap items-stretch h-full">
+					<div
+						data-component="HtmlEditor"
+						class="relative flex-grow w-1/2 h-full group-[.is-vertical]:w-full group-[.is-vertical]:h-1/2"
+						data-lang="text/html"
+					>
+						<div class="absolute inset-0 bg-zinc-50 dark:bg-neutral-900"></div>
+					</div>
+					<div
+						data-component="ScriptEditor"
+						class="relative flex-grow w-1/2 h-full group-[.is-vertical]:w-full group-[.is-vertical]:h-1/2 dark:border-l-zinc-700"
+						data-lang="text/javascript"
+					>
+						<div class="absolute inset-0 bg-zinc-50 dark:bg-neutral-900"></div>
+					</div>
+				</div>
+			</div>
+			<iframe
+				data-component="Iframe"
+				class="
+					absolute bottom-0 right-0 mt-8 w-full top-1/3
+					group-[.is-vertical]:w-3/5 group-[.is-vertical]:top-0
+				"
+				src="about:blank"
+				srcdoc=""
+				frameborder="0"
+			></iframe>
 		</main>
 	</body>
 </html>

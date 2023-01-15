@@ -1,6 +1,6 @@
 import { defineConfig } from '@studiometa/webpack-config';
 import { prototyping } from '@studiometa/webpack-config/presets';
-import HtmlWebpackInlineSourcePlugin from '@effortlessmotion/html-webpack-inline-source-plugin';
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 
 /**
  * Inline source preset.
@@ -23,8 +23,12 @@ function htmlWebpackScriptTypeModule() {
 }
 
 export default defineConfig({
-	presets: [
-		prototyping(),
-		htmlWebpackScriptTypeModule()
-	],
+	presets: [prototyping({ ts: true }), htmlWebpackScriptTypeModule()],
+	webpack(config) {
+		config.devtool = false;
+		config.optimization.minimize = true;
+		config.plugins.push(
+			new MonacoWebpackPlugin()
+		);
+	},
 });
