@@ -57,34 +57,49 @@
 					</label>
 				</div>
 			</div>
-			<div class="absolute top-0 left-0 flex flex-col w-full h-1/3 group-[.is-vertical]:w-2/5 group-[.is-vertical]:h-full mt-8 border-b dark:border-b-zinc-700">
-				<div class="flex group-[.is-vertical]:flex-col flex-grow flex-wrap items-stretch h-full">
-					<div
-						data-component="HtmlEditor"
-						class="relative flex-grow w-1/2 h-full group-[.is-vertical]:w-full group-[.is-vertical]:h-1/2"
-						data-lang="text/html"
-					>
-						<div class="absolute inset-0 bg-zinc-50 dark:bg-neutral-900"></div>
-					</div>
-					<div
-						data-component="ScriptEditor"
-						class="relative flex-grow w-1/2 h-full group-[.is-vertical]:w-full group-[.is-vertical]:h-1/2 dark:border-l-zinc-700"
-						data-lang="text/javascript"
-					>
-						<div class="absolute inset-0 bg-zinc-50 dark:bg-neutral-900"></div>
+			<div data-component="LayoutReactive"
+				data-option-horizontal="flex-col"
+				class="absolute top-8 left-0 right-0 bottom-0 flex flex-col">
+				<div data-component="LayoutReactive"
+					data-option-vertical="w-2/5 h-full border-r dark:border-r-zinc-700"
+					data-option-horizontal="w-full border-b dark:border-b-zinc-700"
+					class="flex flex-col w-full border-b dark:border-b-zinc-700">
+					<div data-component="LayoutReactive"
+						data-option-vertical="flex-col"
+						class="flex flex-grow flex-wrap items-stretch h-full">
+						<div
+							data-component="HtmlEditor LayoutReactive"
+							data-option-vertical="w-full h-1/2"
+							data-option-horizontal="w-1/2 h-[33vh]"
+							class="relative flex-grow w-1/2 h-[33vh]"
+							data-lang="text/html"
+						>
+							<div class="absolute inset-0 bg-zinc-50 dark:bg-neutral-900"></div>
+						</div>
+						<div
+							data-component="ScriptEditor LayoutReactive"
+							data-option-vertical="w-full h-1/2"
+							data-option-horizontal="w-1/2 h-[33vh]"
+							class="relative flex-grow w-1/2 h-[33vh] dark:border-l-zinc-700"
+							data-lang="text/javascript"
+						>
+							<div class="absolute inset-0 bg-zinc-50 dark:bg-neutral-900"></div>
+						</div>
 					</div>
 				</div>
+				<div data-component="LayoutReactive"
+					class="relative w-full flex-grow"
+					data-option-vertical="w-3/5"
+					data-option-horizontal="w-full">
+					<iframe
+						data-component="Iframe"
+						src="about:blank"
+						srcdoc=""
+						frameborder="0"
+						class="absolute inset-0 w-full h-full"
+					></iframe>
+				</div>
 			</div>
-			<iframe
-				data-component="Iframe"
-				class="
-					absolute bottom-0 right-0 mt-8 w-full top-1/3
-					group-[.is-vertical]:w-3/5 group-[.is-vertical]:top-0
-				"
-				src="about:blank"
-				srcdoc=""
-				frameborder="0"
-			></iframe>
 		</main>
 	</body>
 </html>

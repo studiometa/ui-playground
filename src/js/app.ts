@@ -6,11 +6,13 @@ import Iframe from './components/Iframe.js';
 import type HtmlEditor from './components/HtmlEditor.js';
 import type ScriptEditor from './components/ScriptEditor.js';
 import LayoutSwitcher from './components/LayoutSwitcher.js';
+import LayoutReactive from './components/LayoutReactive.js';
 
 export interface AppProps extends BaseProps {
 	$children: {
 		Iframe: Iframe[];
 		LayoutSwitcher: LayoutSwitcher[];
+		LayoutReactive: LayoutReactive[];
 		HtmlEditor: Array<Promise<HtmlEditor>>;
 		ScriptEditor: Array<Promise<ScriptEditor>>;
 	};
@@ -27,6 +29,7 @@ class App extends Base<AppProps> {
 		components: {
 			Iframe,
 			LayoutSwitcher,
+			LayoutReactive,
 			HtmlEditor: () => import('./components/HtmlEditor.js'),
 			ScriptEditor: () => import('./components/ScriptEditor.js'),
 		},
@@ -60,6 +63,12 @@ class App extends Base<AppProps> {
 
 	onSriptEditorContentChange() {
 		this.iframe.updateScript();
+	}
+
+	onLayoutSwitcherSwitch(value) {
+		this.$children.LayoutReactive.forEach((layoutReactive) => {
+			layoutReactive.switch(value);
+		})
 	}
 }
 

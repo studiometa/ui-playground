@@ -5,7 +5,7 @@ export default class LayoutSwitcher extends Switcher {
 		name: 'LayoutSwitcher',
 	};
 
-	switch(value) {
+	switch(value:'vertical'|'horizontal') {
 		document.body.classList.toggle('is-vertical', value === 'vertical');
 	}
 }

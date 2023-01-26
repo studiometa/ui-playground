@@ -5,7 +5,7 @@ import { editor } from 'monaco-editor/esm/vs/editor/editor.api.js';
 
 export interface EditorProps extends BaseProps {}
 
-const instances:Editor[] = [];
+const instances: Editor[] = [];
 
 /**
  * Editor class.
@@ -50,6 +50,7 @@ export default class Editor extends Base<EditorProps> {
 		});
 
 		this.editor.onDidChangeModelContent(debounce(() => {
+			console.log('onDidChangeModelContent', this.editor.getValue());
 			this.$emit('content-change', this.editor.getValue());
 		}, 500));
 	}

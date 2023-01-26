@@ -25,8 +25,8 @@ function htmlWebpackScriptTypeModule() {
 export default defineConfig({
 	presets: [prototyping({ ts: true }), htmlWebpackScriptTypeModule()],
 	webpack(config) {
+		config.output.module = true;
 		config.devtool = false;
-		config.optimization.minimize = true;
 		config.plugins.push(
 			new MonacoWebpackPlugin()
 		);

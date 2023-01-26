@@ -60,6 +60,7 @@ export default class Iframe extends Base<IframeProps> {
 
   async updateHtml() {
     await nextTick();
+    console.log('updateHtml', getHtml());
     this.doc.body.innerHTML = getHtml();
     await nextTick();
     this.updateScript(false);
