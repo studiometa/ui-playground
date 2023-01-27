@@ -18,15 +18,15 @@ export interface AppProps extends BaseProps {
 		ScriptEditor: Array<Promise<ScriptEditor>>;
 	};
 	$refs: {
-		htmlEditorVisibility: HTMLInputElement;
-		scriptEditorVisibility: HTMLInputElement;
+		htmlVisibility: HTMLInputElement;
+		scriptVisibility: HTMLInputElement;
 	};
 }
 
 class App extends Base<AppProps> {
 	static config: BaseConfig = {
 		name: 'App',
-		refs: ['htmlEditorVisibility', 'scriptEditorVisibility'],
+		refs: ['htmlVisibility', 'scriptVisibility'],
 		components: {
 			Iframe,
 			ThemeSwitcher,
@@ -51,25 +51,25 @@ class App extends Base<AppProps> {
 
 	async onHtmlEditorVisibilityInput() {
 		const editor = await this.htmlEditor;
-		editor.toggle(this.$refs.htmlEditorVisibility.checked)
+		editor.toggle(this.$refs.htmlVisibility.checked)
 	}
 
 	async onScriptEditorVisibilityInput() {
 		const editor = await this.scriptEditor;
-		editor.toggle(this.$refs.scriptEditorVisibility.checked)
+		editor.toggle(this.$refs.scriptVisibility.checked)
 	}
 
 	onHtmlEditorContentChange() {
 		this.iframe.updateHtml();
 	}
 
-	onSriptEditorContentChange() {
+	onScriptEditorContentChange() {
 		this.iframe.updateScript();
 	}
 }
 
 export default createApp(App, {
 	features: {
-		asyncChildren: true,
+		asyncChildren: false,
 	},
 });
