@@ -26,12 +26,12 @@
 		</script>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Code Editor</title>
+		<title>UI playground</title>
 	</head>
 	<body class="group dark:bg-zinc-900 dark:text-white">
 		<main class="fixed top-0 left-0 w-full h-full">
 			<div class="z-10 absolute top-0 flex gap-4 w-full p-2 leading-4 bg-zinc-50 dark:bg-zinc-800 text-sm border-b dark:border-b-zinc-700">
-				Code Editor
+				UI playground
 
 				<div>
 					Editors
@@ -40,6 +40,7 @@
 							data-ref="htmlEditorVisibility"
 							type="checkbox"
 							name="html-editor"
+							id="html-editor"
 							checked
 						/>
 						HTML
@@ -48,8 +49,8 @@
 						<input
 							data-ref="scriptEditorVisibility"
 							type="checkbox"
-							id="script-editor"
 							name="script-editor"
+							id="script-editor"
 							checked
 						/>
 						JS

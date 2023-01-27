@@ -47,6 +47,7 @@ export default class Editor extends Base<EditorProps> {
 			minimap: { enabled: false },
 			automaticLayout: true,
 			fontLigatures: true,
+			fontSize: 14,
 			theme: themeIsDark() ? 'vs-dark' : 'vs',
 		});
 

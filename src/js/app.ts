@@ -70,6 +70,6 @@ class App extends Base<AppProps> {
 
 export default createApp(App, {
 	features: {
-		asyncChildren: false,
+		asyncChildren: true,
 	},
 });

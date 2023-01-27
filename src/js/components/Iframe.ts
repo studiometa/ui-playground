@@ -1,7 +1,7 @@
 import { Base } from '@studiometa/js-toolkit';
 import type { BaseProps } from '@studiometa/js-toolkit';
 import { nextTick } from '@studiometa/js-toolkit/utils';
-import { getHtml, getScript } from '../store/index.js';
+import { getHtml, getScript, watchTheme, themeIsDark } from '../store/index.js';
 
 export interface IframeProps extends BaseProps {
   $el: HTMLIFrameElement;
@@ -45,8 +45,20 @@ export default class Iframe extends Base<IframeProps> {
     // Add Tailwind CDN
     const tailwindScript = this.doc.createElement('script');
     tailwindScript.src = 'https://cdn.tailwindcss.com';
-    tailwindScript.id = 'tailwind';
+    tailwindScript.id = 'tw';
+    tailwindScript.onload = () => {
+      // Add Tailwind config
+      const tailwindConfig = this.doc.createElement('script');
+      tailwindConfig.textContent = `tailwind.config = { darkMode: 'class' };`;
+      this.doc.head.appendChild(tailwindConfig);
+    }
     this.doc.head.appendChild(tailwindScript);
+
+
+    this.doc.documentElement.classList.toggle('dark', themeIsDark());
+    watchTheme((theme) => {
+      this.doc.documentElement.classList.toggle('dark', theme === 'dark');
+    });
 
     // Add custom script
     this.script = this.doc.createElement('script');

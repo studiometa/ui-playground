@@ -28,7 +28,10 @@ export function setScript(value) {
 }
 
 export function getHtml() {
-	return store.get('html');
+	return store.get('html') ||
+		`<div class="p-10 dark:text-white">
+	Hello world!
+</div>`;
 }
 
 export function setHtml(value) {
