@@ -1,5 +1,7 @@
 import { Base } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
+import { watchLayout, getLayout } from '../store/index.js';
+import type { Layouts } from '../store/index.js';
 
 export interface LayoutReactiveProps extends BaseProps {
 	$options: {
@@ -23,7 +25,14 @@ export default class LayoutReactive extends Base<LayoutReactiveProps> {
 		},
 	};
 
-	switch(value: 'horizontal' | 'vertical') {
+	mounted() {
+		this.switch(getLayout());
+		watchLayout((value: Layouts) => {
+			this.switch(value);
+		});
+	}
+
+	switch(value: Layouts) {
 		const { horizontal, vertical } = this.$options;
 		const toAdd = value === 'horizontal' ? horizontal : vertical;
 		const toRemove = value === 'horizontal' ? vertical : horizontal;

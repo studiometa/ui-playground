@@ -1,7 +1,7 @@
 import { Base } from '@studiometa/js-toolkit';
 import type { BaseProps } from '@studiometa/js-toolkit';
 import { nextTick } from '@studiometa/js-toolkit/utils';
-import { getHtml, getScript } from '../store.js';
+import { getHtml, getScript } from '../store/index.js';
 
 export interface IframeProps extends BaseProps {
   $el: HTMLIFrameElement;

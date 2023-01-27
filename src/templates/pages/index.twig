@@ -10,7 +10,17 @@
 						: 'light';
 				}
 				if (localStorage.theme === 'dark') {
-					document.querySelector('html').classList.add('dark');
+					document.documentElement.classList.add('dark');
+				}
+			} catch {}
+		</script>
+		<script>
+			try {
+				if (!('layout' in localStorage)) {
+					localStorage.layout = 'horizontal';
+				}
+				if (localStorage.layout === 'vertical') {
+					document.documentElement.classList.add('is-vertical');
 				}
 			} catch {}
 		</script>
@@ -74,7 +84,7 @@
 				data-option-horizontal="flex-col"
 				class="absolute top-8 left-0 right-0 bottom-0 flex flex-col">
 				<div data-component="LayoutReactive"
-					data-option-vertical="w-2/5 h-full border-r dark:border-r-zinc-700"
+					data-option-vertical="h-full border-r dark:border-r-zinc-700"
 					data-option-horizontal="w-full border-b dark:border-b-zinc-700"
 					class="flex flex-col w-full border-b dark:border-b-zinc-700">
 					<div data-component="LayoutReactive"
@@ -82,7 +92,7 @@
 						class="flex flex-grow flex-wrap items-stretch h-full">
 						<div
 							data-component="HtmlEditor LayoutReactive"
-							data-option-vertical="w-full h-1/2"
+							data-option-vertical="w-[40vw] h-1/2"
 							data-option-horizontal="w-1/2 h-[33vh]"
 							class="relative flex-grow w-1/2 h-[33vh]"
 							data-lang="text/html"
@@ -91,7 +101,7 @@
 						</div>
 						<div
 							data-component="ScriptEditor LayoutReactive"
-							data-option-vertical="w-full h-1/2"
+							data-option-vertical="w-[40vw] h-1/2"
 							data-option-horizontal="w-1/2 h-[33vh]"
 							class="relative flex-grow w-1/2 h-[33vh] dark:border-l-zinc-700"
 							data-lang="text/javascript"

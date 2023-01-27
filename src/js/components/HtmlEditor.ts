@@ -1,4 +1,4 @@
-import { getHtml, setHtml } from '../store.js';
+import { getHtml, setHtml } from '../store/index.js';
 import Editor from './Editor.js';
 
 export default class HtmlEditor extends Editor {

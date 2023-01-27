@@ -1,4 +1,4 @@
-import { getScript, setScript } from '../store.js';
+import { getScript, setScript } from '../store/index.js';
 import Editor from './Editor.js';
 
 export default class HtmlEditor extends Editor {

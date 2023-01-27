@@ -66,12 +66,6 @@ class App extends Base<AppProps> {
 	onSriptEditorContentChange() {
 		this.iframe.updateScript();
 	}
-
-	onLayoutSwitcherSwitch(value) {
-		this.$children.LayoutReactive.forEach((layoutReactive) => {
-			layoutReactive.switch(value);
-		})
-	}
 }
 
 export default createApp(App, {

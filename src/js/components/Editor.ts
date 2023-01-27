@@ -2,7 +2,7 @@ import { Base } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
 import { debounce, isDefined } from '@studiometa/js-toolkit/utils';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api.js';
-import { themeIsDark, watchTheme } from '../store.js';
+import { themeIsDark, watchTheme } from '../store/index.js';
 
 export interface EditorProps extends BaseProps {}
 
