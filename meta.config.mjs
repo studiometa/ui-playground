@@ -27,6 +27,7 @@ export default defineConfig({
 	webpack(config) {
 		config.output.module = true;
 		config.devtool = false;
+		config.optimization.minimize = false;
 		config.plugins.push(
 			new MonacoWebpackPlugin()
 		);
