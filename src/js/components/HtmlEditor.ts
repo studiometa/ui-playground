@@ -3,7 +3,7 @@ import Editor from './Editor.js';
 
 export default class HtmlEditor extends Editor {
 	get language(): string {
-		return 'html';
+		return 'twig';
 	}
 
 	get initialValue(): string {

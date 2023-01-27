@@ -2,6 +2,7 @@ import { Base } from '@studiometa/js-toolkit';
 import type { BaseProps } from '@studiometa/js-toolkit';
 import { nextTick } from '@studiometa/js-toolkit/utils';
 import { getHtml, getScript, watchTheme, themeIsDark } from '../store/index.js';
+import { twigRender } from '../utils/twigRender.js';
 
 export interface IframeProps extends BaseProps {
   $el: HTMLIFrameElement;
@@ -33,13 +34,14 @@ export default class Iframe extends Base<IframeProps> {
     // @ts-ignore
     this.window.__DEV__ = true;
 
+    const rendered = await twigRender(getHtml());
     this.doc.documentElement.innerHTML = `
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-  ${getHtml()}
+  ${rendered}
 </body>`;
 
     // Add Tailwind CDN
@@ -72,8 +74,10 @@ export default class Iframe extends Base<IframeProps> {
 
   async updateHtml() {
     await nextTick();
-    console.log('updateHtml', getHtml());
-    this.doc.body.innerHTML = getHtml();
+    const rendered = await twigRender(getHtml());
+    if (rendered) {
+      this.doc.body.innerHTML = rendered;
+    }
     await nextTick();
     this.updateScript(false);
   }

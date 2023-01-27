@@ -35,6 +35,5 @@ export function getHtml() {
 }
 
 export function setHtml(value) {
-	console.log('setHtml', value);
 	store.set('html', value);
 }
