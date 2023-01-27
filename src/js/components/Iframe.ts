@@ -54,11 +54,11 @@ export default class Iframe extends Base<IframeProps> {
     }
     this.doc.head.appendChild(tailwindScript);
 
-
-    this.doc.documentElement.classList.toggle('dark', themeIsDark());
-    watchTheme((theme) => {
-      this.doc.documentElement.classList.toggle('dark', theme === 'dark');
-    });
+    // Uncomment to enable dark mode in the preview
+    // this.doc.documentElement.classList.toggle('dark', themeIsDark());
+    // watchTheme((theme) => {
+    //   this.doc.documentElement.classList.toggle('dark', theme === 'dark');
+    // });
 
     // Add custom script
     this.script = this.doc.createElement('script');
