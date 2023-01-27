@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script>
+			try {
+				if (!('theme' in localStorage)) {
+					localStorage.theme = window.matchMedia('(prefers-color-scheme:dark)')
+						.matches
+						? 'dark'
+						: 'light';
+				}
+				if (localStorage.theme === 'dark') {
+					document.querySelector('html').classList.add('dark');
+				}
+			} catch {}
+		</script>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Code Editor</title>
@@ -48,11 +61,11 @@
 				<div data-component="ThemeSwitcher">
 					Theme
 					<label for="theme-light">
-						<input type="radio" name="theme" id="theme-light" value="light" checked>
+						<input data-ref="inputs[]" type="radio" name="theme" id="theme-light" value="light" checked>
 						Light
 					</label>
 					<label for="theme-dark">
-						<input type="radio" name="theme" id="theme-dark" value="dark">
+						<input data-ref="inputs[]" type="radio" name="theme" id="theme-dark" value="dark">
 						Dark
 					</label>
 				</div>

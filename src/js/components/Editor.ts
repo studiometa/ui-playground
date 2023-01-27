@@ -2,6 +2,7 @@ import { Base } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
 import { debounce, isDefined } from '@studiometa/js-toolkit/utils';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api.js';
+import { themeIsDark, watchTheme } from '../store.js';
 
 export interface EditorProps extends BaseProps {}
 
@@ -46,19 +47,18 @@ export default class Editor extends Base<EditorProps> {
 			minimap: { enabled: false },
 			automaticLayout: true,
 			fontLigatures: true,
-			theme: 'vs-dark',
+			theme: themeIsDark() ? 'vs-dark' : 'vs',
+		});
+
+		watchTheme(() => {
+			this.editor.updateOptions({
+				theme: themeIsDark() ? 'vs-dark' : 'vs',
+			});
 		});
 
 		this.editor.onDidChangeModelContent(debounce(() => {
-			console.log('onDidChangeModelContent', this.editor.getValue());
 			this.$emit('content-change', this.editor.getValue());
 		}, 500));
-	}
-
-	switchTeme(dark = false) {
-		this.editor.updateOptions({
-			theme: dark ? 'vs-dark' : 'vs',
-		});
 	}
 
 	show() {

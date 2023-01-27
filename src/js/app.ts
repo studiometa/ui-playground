@@ -7,6 +7,7 @@ import type HtmlEditor from './components/HtmlEditor.js';
 import type ScriptEditor from './components/ScriptEditor.js';
 import LayoutSwitcher from './components/LayoutSwitcher.js';
 import LayoutReactive from './components/LayoutReactive.js';
+import ThemeSwitcher from './components/ThemeSwitcher.js';
 
 export interface AppProps extends BaseProps {
 	$children: {
@@ -28,6 +29,7 @@ class App extends Base<AppProps> {
 		refs: ['htmlEditorVisibility', 'scriptEditorVisibility'],
 		components: {
 			Iframe,
+			ThemeSwitcher,
 			LayoutSwitcher,
 			LayoutReactive,
 			HtmlEditor: () => import('./components/HtmlEditor.js'),
