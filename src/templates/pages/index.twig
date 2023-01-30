@@ -31,55 +31,98 @@
 	</head>
 	<body class="group dark:bg-zinc-900 dark:text-white">
 		<main class="fixed top-0 left-0 w-full h-full">
-			<div class="z-10 absolute top-0 flex gap-8 w-full p-4 leading-4 bg-zinc-100 dark:bg-zinc-800 text-sm dark:border-b-zinc-700">
+			<div class="z-10 absolute top-0 flex items-center gap-8 w-full p-4 leading-4 bg-zinc-100 dark:bg-zinc-800 text-sm dark:text-zinc-100 dark:border-b-zinc-700">
 				<span class="font-bold">UI Playground</span>
 
-				<div class="flex gap-4">
-					Editors
-					<label for="html-editor">
-						<input
-							data-ref="htmlVisibility"
-							type="checkbox"
-							name="html-editor"
-							id="html-editor"
-							checked
-						/>
-						HTML
-					</label>
-					<label for="script-editor">
-						<input
-							data-ref="scriptVisibility"
-							type="checkbox"
-							name="script-editor"
-							id="script-editor"
-							checked
-						/>
-						JS
-					</label>
+				<div class="flex items-center gap-4">
+					{% include '@components/Checkbox.twig' with {
+						label: 'HTML',
+						attr: {
+							for: 'html-editor',
+						},
+						input_attr: {
+							data_ref: 'htmlVisibility',
+							name: 'html-editor',
+							id: 'html-editor',
+							checked: true,
+						}
+					} %}
+					{% include '@components/Checkbox.twig' with {
+						label: 'JS',
+						attr: {
+							for: 'script-editor',
+						},
+						input_attr: {
+							data_ref: 'scriptVisibility',
+							name: 'script-editor',
+							id: 'script-editor',
+							checked: true,
+						}
+					} %}
 				</div>
 
-				<div data-component="LayoutSwitcher" class="flex gap-4">
+				<div data-component="LayoutSwitcher" class="flex items-center gap-4">
 					Layout
-					<label for="layout-horizontal">
-						<input data-ref="inputs[]" type="radio" name="layout" id="layout-horizontal" value="horizontal" checked>
-						Horizontal
-					</label>
-					<label for="layout-vertical">
-						<input data-ref="inputs[]" type="radio" name="layout" id="layout-vertical" value="vertical">
-						Vertical
-					</label>
+					{% include '@components/RadioGroup.twig' with {
+						items: [
+							{
+								label: 'Horizontal',
+								attr: {
+									for: 'layout-horizontal',
+								},
+								input_attr: {
+									data_ref: 'inputs[]',
+									name: 'layout',
+									id: 'layout-horizontal',
+									value: 'horizontal',
+								}
+							},
+							{
+								label: 'Vertical',
+								attr: {
+									for: 'layout-vertical',
+								},
+								input_attr: {
+									data_ref: 'inputs[]',
+									name: 'layout',
+									id: 'layout-vertical',
+									value: 'vertical',
+								}
+							}
+						],
+					} %}
 				</div>
 
 				<div data-component="ThemeSwitcher" class="flex gap-4">
 					Theme
-					<label for="theme-light">
-						<input data-ref="inputs[]" type="radio" name="theme" id="theme-light" value="light" checked>
-						Light
-					</label>
-					<label for="theme-dark">
-						<input data-ref="inputs[]" type="radio" name="theme" id="theme-dark" value="dark">
-						Dark
-					</label>
+					{% include '@components/RadioGroup.twig' with {
+						items: [
+							{
+								label: 'Light',
+								attr: {
+									for: 'theme-light',
+								},
+								input_attr: {
+									data_ref: 'inputs[]',
+									name: 'theme',
+									id: 'theme-light',
+									value: 'light',
+								}
+							},
+							{
+								label: 'Dark',
+								attr: {
+									for: 'theme-dark',
+								},
+								input_attr: {
+									data_ref: 'inputs[]',
+									name: 'theme',
+									id: 'theme-dark',
+									value: 'dark',
+								}
+							}
+						],
+					} %}
 				</div>
 			</div>
 			<div data-component="LayoutReactive"
