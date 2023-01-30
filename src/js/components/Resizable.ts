@@ -1,42 +1,57 @@
 import { Base, withDrag } from '@studiometa/js-toolkit';
-import type { BaseProps, BaseConfig } from '@studiometa/js-toolkit';
+import type {
+	BaseProps,
+	BaseConfig,
+	DragServiceProps,
+} from '@studiometa/js-toolkit';
+import { nextTick } from '@studiometa/js-toolkit/utils';
+import ResizableCursorY from './ResizableCursorY.js';
+import ResizableCursorX from './ResizableCursorX.js';
 
 export interface ResizableProps extends BaseProps {
-	$options: {
-		axis: 'x' | 'y';
-	};
-	$refs: {
-		ruler: HTMLElement;
+	$children: {
+		ResizableCursorY: ResizableCursorY[];
+		ResizableCursorX: ResizableCursorX[];
 	};
 }
 
-export default class Resizable extends withDrag(Base, {
-	target: (instance) => instance.$refs.ruler,
-})<ResizableProps> {
+export default class Resizable extends Base<ResizableProps> {
 	static config: BaseConfig = {
 		name: 'Resizable',
-		options: {
-			axis: {
-				type: String,
-				default: 'x',
-			},
+		components: {
+			ResizableCursorY,
+			ResizableCursorX,
 		},
-		refs: ['ruler'],
+		emits: ['dragged'],
 	};
 
 	previousSize = 0;
 
-	dragged(props) {
-		if (props.mode === 'start') {
-			document.body.classList.add('select-none');
-			const size = this.$options.axis === 'x' ? 'offsetWidth' : 'offsetHeight';
+	onResizableCursorYDragged(props: DragServiceProps) {
+		this.resize(props.mode, 'y', props.distance);
+		this.$emit('dragged', props);
+	}
+	onResizableCursorXDragged(props: DragServiceProps) {
+		this.resize(props.mode, 'x', props.distance);
+		this.$emit('dragged', props);
+	}
+
+	resize(
+		mode: DragServiceProps['mode'],
+		axis: 'x' | 'y' = 'x',
+		distance: DragServiceProps['distance']
+	) {
+		if (mode === 'start') {
+			const size = axis === 'x' ? 'offsetWidth' : 'offsetHeight';
 			this.previousSize = this.$el[size];
-		} else if (props.mode === 'drag') {
-			const { axis } = this.$options;
+		} else if (mode === 'drag') {
 			const size = axis === 'x' ? 'width' : 'height';
-			this.$el.style[size] = props.distance[axis] + this.previousSize + 'px';
-		} else if (props.mode === 'drop') {
-			document.body.classList.remove('select-none');
+			this.$el.style[size] = distance[axis] + this.previousSize + 'px';
 		}
+	}
+
+	reset() {
+		this.$el.style.width = '';
+		this.$el.style.height = '';
 	}
 }

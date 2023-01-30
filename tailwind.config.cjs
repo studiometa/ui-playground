@@ -1,7 +1,7 @@
 module.exports = {
 	darkMode: 'class',
 	content: [
-		'./src/js/**/*.js',
+		'./src/js/**/*.ts',
 		'./src/js/**/*.vue',
 		'./src/templates/**/*.twig',
 		'./src/templates/**/*.yml',

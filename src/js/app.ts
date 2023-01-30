@@ -72,11 +72,13 @@ class App extends Base<AppProps> {
 
 	onResizableDragged(props) {
 		if (props.mode === 'start') {
-			this.iframe.$el.classList.add('pointer-events-none');
+			document.body.classList.add('select-none');
+			this.iframe.$el.parentElement.classList.add('pointer-events-none');
 		}
 
 		if (props.mode === 'drop') {
-			this.iframe.$el.classList.remove('pointer-events-none');
+			document.body.classList.remove('select-none');
+			this.iframe.$el.parentElement.classList.remove('pointer-events-none');
 		}
 	}
 }

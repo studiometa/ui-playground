@@ -1,7 +1,8 @@
-import { Base } from '@studiometa/js-toolkit';
+import { Base, getInstanceFromElement } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
 import { watchLayout, getLayout } from '../store/index.js';
 import type { Layouts } from '../store/index.js';
+import Resizable from './Resizable.js';
 
 export interface LayoutReactiveProps extends BaseProps {
 	$options: {
@@ -43,6 +44,11 @@ export default class LayoutReactive extends Base<LayoutReactiveProps> {
 
 		if (toAdd.length) {
 			this.$el.classList.add(...toAdd.split(' '));
+		}
+
+		const maybeResizable = getInstanceFromElement(this.$el, Resizable);
+		if (maybeResizable) {
+			maybeResizable.reset();
 		}
 	}
 }

@@ -48,6 +48,7 @@ export default class Editor extends Base<EditorProps> {
 			automaticLayout: true,
 			fontLigatures: true,
 			fontSize: 14,
+			tabSize: 2,
 			theme: themeIsDark() ? 'vs-dark' : 'vs',
 		});
 
