@@ -1,11 +1,13 @@
 {
   "scripts": {
     "dev": "meta dev",
-    "build": "meta build"
+    "build": "meta build",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@studiometa/webpack-config": "^4.2.0-alpha.3",
-    "monaco-editor-webpack-plugin": "^7.0.1"
+    "monaco-editor-webpack-plugin": "^7.0.1",
+    "patch-package": "^6.5.1"
   },
   "dependencies": {
     "@studiometa/js-toolkit": "^2.9.0",
