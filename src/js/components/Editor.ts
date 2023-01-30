@@ -51,6 +51,7 @@ export default class Editor extends Base<EditorProps> {
 			minimap: { enabled: false },
 			automaticLayout: true,
 			fontLigatures: true,
+			fontFamily: 'JetBrains Mono',
 			fontSize: 14,
 			tabSize: 2,
 			theme: themeIsDark() ? 'vs-dark' : 'vs',
