@@ -1,7 +1,6 @@
 import { Base, createApp } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
-import { debounce, nextTick } from '@studiometa/js-toolkit/utils';
-import { store } from './store.js';
+import { debounce, nextTick, domScheduler } from '@studiometa/js-toolkit/utils';
 import Iframe from './components/Iframe.js';
 import type HtmlEditor from './components/HtmlEditor.js';
 import type ScriptEditor from './components/ScriptEditor.js';
@@ -54,12 +53,12 @@ class App extends Base<AppProps> {
 
 	async onHtmlVisibilityInput() {
 		const editor = await this.htmlEditor;
-		editor.toggle(this.$refs.htmlVisibility.checked)
+		editor.toggle(this.$refs.htmlVisibility.checked);
 	}
 
 	async onScriptVisibilityInput() {
 		const editor = await this.scriptEditor;
-		editor.toggle(this.$refs.scriptVisibility.checked)
+		editor.toggle(this.$refs.scriptVisibility.checked);
 	}
 
 	onHtmlEditorContentChange() {
@@ -72,19 +71,23 @@ class App extends Base<AppProps> {
 
 	onResizableDragged(props) {
 		if (props.mode === 'start') {
-			document.body.classList.add('select-none');
-			this.iframe.$el.parentElement.classList.add('pointer-events-none');
+			domScheduler.write(() => {
+				document.body.classList.add('select-none');
+				this.iframe.$el.parentElement.classList.add('pointer-events-none');
+			});
 		}
 
 		if (props.mode === 'drop') {
-			document.body.classList.remove('select-none');
-			this.iframe.$el.parentElement.classList.remove('pointer-events-none');
+			domScheduler.write(() => {
+				document.body.classList.remove('select-none');
+				this.iframe.$el.parentElement.classList.remove('pointer-events-none');
+			});
 		}
 	}
 }
 
 export default createApp(App, {
 	features: {
-		asyncChildren: false,
+		asyncChildren: true,
 	},
 });

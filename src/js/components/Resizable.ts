@@ -4,7 +4,7 @@ import type {
 	BaseConfig,
 	DragServiceProps,
 } from '@studiometa/js-toolkit';
-import { nextTick } from '@studiometa/js-toolkit/utils';
+import { nextTick, domScheduler, clamp } from '@studiometa/js-toolkit/utils';
 import { layoutIsVertical } from '../store/index.js';
 import ResizableCursorY from './ResizableCursorY.js';
 import ResizableCursorX from './ResizableCursorX.js';
@@ -49,11 +49,18 @@ export default class Resizable extends Base<ResizableProps> {
 		distance: DragServiceProps['distance']
 	) {
 		if (mode === 'start') {
-			const size = axis === 'x' ? 'offsetWidth' : 'offsetHeight';
-			this.previousSize = this.$el[size];
+			domScheduler.read(() => {
+				const size = axis === 'x' ? 'offsetWidth' : 'offsetHeight';
+				this.previousSize = this.$el[size];
+			});
 		} else if (mode === 'drag') {
-			const size = axis === 'x' ? 'width' : 'height';
-			this.$el.style[size] = distance[axis] + this.previousSize + 'px';
+			domScheduler.write(() => {
+				const size = axis === 'x' ? 'width' : 'height';
+				const minSize = 8;
+				const maxSize = axis === 'x' ? window.innerWidth : window.innerHeight - 48;
+				const newSize = clamp(distance[axis] + this.previousSize, minSize, maxSize);
+				this.$el.style[size] = newSize + 'px';
+			})
 		}
 	}
 
@@ -68,8 +75,10 @@ export default class Resizable extends Base<ResizableProps> {
 	}
 
 	reset() {
-		this.$el.style.width = '';
-		this.$el.style.height = '';
+		domScheduler.write(() => {
+			this.$el.style.width = '';
+			this.$el.style.height = '';
+		});
 		this.$children.ResizableSync.forEach(resizable => resizable.reset());
 	}
 }

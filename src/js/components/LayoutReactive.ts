@@ -1,5 +1,6 @@
 import { Base, getInstanceFromElement } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
+import { domScheduler } from '@studiometa/js-toolkit/utils';
 import { watchLayout, getLayout } from '../store/index.js';
 import type { Layouts } from '../store/index.js';
 import Resizable from './Resizable.js';
@@ -34,21 +35,27 @@ export default class LayoutReactive extends Base<LayoutReactiveProps> {
 	}
 
 	switch(value: Layouts) {
-		const { horizontal, vertical } = this.$options;
-		const toAdd = value === 'horizontal' ? horizontal : vertical;
-		const toRemove = value === 'horizontal' ? vertical : horizontal;
+		domScheduler.read(() => {
+			const { horizontal, vertical } = this.$options;
+			const toAdd = value === 'horizontal' ? horizontal : vertical;
+			const toRemove = value === 'horizontal' ? vertical : horizontal;
 
-		if (toRemove.length) {
-			this.$el.classList.remove(...toRemove.split(' '));
-		}
+			if (toRemove.length) {
+				domScheduler.write(() => {
+					this.$el.classList.remove(...toRemove.split(' '));
+				})
+			}
 
-		if (toAdd.length) {
-			this.$el.classList.add(...toAdd.split(' '));
-		}
+			if (toAdd.length) {
+				domScheduler.write(() => {
+					this.$el.classList.add(...toAdd.split(' '));
+				});
+			}
 
-		const maybeResizable = getInstanceFromElement(this.$el, Resizable);
-		if (maybeResizable) {
-			maybeResizable.reset();
-		}
+			const maybeResizable = getInstanceFromElement(this.$el, Resizable);
+			if (maybeResizable) {
+				maybeResizable.reset();
+			}
+		});
 	}
 }

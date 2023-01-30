@@ -1,9 +1,7 @@
 import { Base, withDrag } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
 
-export interface ResizableCursorYProps extends BaseProps {
-
-}
+export interface ResizableCursorYProps extends BaseProps {}
 
 /**
  * ResizableCursorY class.

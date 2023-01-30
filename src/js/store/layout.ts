@@ -1,3 +1,5 @@
+import { domScheduler } from '@studiometa/js-toolkit/utils';
+
 export type Layouts = 'vertical' | 'horizontal';
 
 let callbacks = [];
@@ -16,7 +18,9 @@ export function layoutIsHoritontal() {
 
 export function setLayout(value: Layouts) {
 	localStorage.setItem('layout', value);
-	document.documentElement.classList.toggle('is-vertical', value === 'vertical');
+	domScheduler.write(() => {
+		document.documentElement.classList.toggle('is-vertical', value === 'vertical');
+	});
 	callbacks.forEach((callback) => callback(value));
 }
 

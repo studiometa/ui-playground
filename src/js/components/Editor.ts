@@ -1,6 +1,10 @@
 import { Base } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
-import { debounce, isDefined } from '@studiometa/js-toolkit/utils';
+import {
+	debounce,
+	isDefined,
+	domScheduler,
+} from '@studiometa/js-toolkit/utils';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api.js';
 import { themeIsDark, watchTheme } from '../store/index.js';
 
@@ -58,17 +62,23 @@ export default class Editor extends Base<EditorProps> {
 			});
 		});
 
-		this.editor.onDidChangeModelContent(debounce(() => {
-			this.$emit('content-change', this.editor.getValue());
-		}, 500));
+		this.editor.onDidChangeModelContent(
+			debounce(() => {
+				this.$emit('content-change', this.editor.getValue());
+			}, 500)
+		);
 	}
 
 	show() {
-		this.$el.style.display = '';
+		domScheduler.write(() => {
+			this.$el.style.display = '';
+		});
 	}
 
 	hide() {
-		this.$el.style.display = 'none';
+		domScheduler.write(() => {
+			this.$el.style.display = 'none';
+		});
 	}
 
 	toggle(force) {
@@ -78,10 +88,12 @@ export default class Editor extends Base<EditorProps> {
 			return this.hide();
 		}
 
-		if (this.$el.style.display === 'none') {
-			this.show();
-		} else {
-			this.hide();
-		}
+		domScheduler.read(() => {
+			if (this.$el.style.display === 'none') {
+				this.show();
+			} else {
+				this.hide();
+			}
+		});
 	}
 }
