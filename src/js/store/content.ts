@@ -1,9 +1,16 @@
+import { zip, unzip } from '../utils/zip.js';
+
 const store = new URLSearchParams(location.hash.substr(1));
+
 const storeSetter = store.set.bind(store);
 const storeGetter = store.get.bind(store);
-store.get = (key) => (store.has(key) ? atob(storeGetter(key)) : '');
+
+store.get = (key) => {
+	return (store.has(key) ? unzip(storeGetter(key)) : '')
+};
+
 store.set = (key, value) => {
-	storeSetter(key, btoa(value));
+	storeSetter(key, zip(value));
 	location.hash = store.toString();
 };
 
@@ -28,10 +35,12 @@ export function setScript(value) {
 }
 
 export function getHtml() {
-	return store.get('html') ||
+	return (
+		store.get('html') ||
 		`{% html_element 'div' with { class: 'p-10' } %}
 	Hello world!
-{% end_html_element %}`;
+{% end_html_element %}`
+	);
 }
 
 export function setHtml(value) {
