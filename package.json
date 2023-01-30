@@ -8,7 +8,7 @@
     "monaco-editor-webpack-plugin": "^7.0.1"
   },
   "dependencies": {
-    "@studiometa/js-toolkit": "^2.8.0",
+    "@studiometa/js-toolkit": "^2.9.0",
     "esbuild-wasm": "^0.16.17",
     "fflate": "^0.7.4",
     "monaco-editor": "^0.34.1"
