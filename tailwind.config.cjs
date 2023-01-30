@@ -9,4 +9,17 @@ module.exports = {
 		'./node_modules/@studiometa/ui/**/*.js',
 		'tailwind.safelist.txt',
 	],
+	theme: {
+		extend: {
+			keyframes: {
+				loader: {
+					'0%': { transform: 'rotate(0)' },
+					'100%': { transform: 'rotate(720deg)' },
+				},
+			},
+			animation: {
+				loader: 'loader 1s ease-in-out infinite',
+			}
+		},
+	},
 };

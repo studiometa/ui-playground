@@ -103,8 +103,7 @@ class App extends Base<AppProps> {
 	}
 }
 
-export default createApp(App, {
-	features: {
-		asyncChildren: true,
-	},
-});
+const app = new App(document.body);
+app.$mount();
+
+export default app;
