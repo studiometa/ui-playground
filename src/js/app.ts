@@ -2,13 +2,14 @@ import { Base, createApp } from '@studiometa/js-toolkit';
 import type { BaseConfig, BaseProps } from '@studiometa/js-toolkit';
 import { debounce, nextTick, domScheduler } from '@studiometa/js-toolkit/utils';
 import Iframe from './components/Iframe.js';
-import type HtmlEditor from './components/HtmlEditor.js';
-import type ScriptEditor from './components/ScriptEditor.js';
+import HtmlEditor from './components/HtmlEditor.js';
+import ScriptEditor from './components/ScriptEditor.js';
 import LayoutSwitcher from './components/LayoutSwitcher.js';
 import LayoutReactive from './components/LayoutReactive.js';
 import ThemeSwitcher from './components/ThemeSwitcher.js';
 import Resizable from './components/Resizable.js';
 import Editors from './components/Editors.js';
+
 
 export interface AppProps extends BaseProps {
 	$children: {
@@ -17,8 +18,8 @@ export interface AppProps extends BaseProps {
 		LayoutReactive: LayoutReactive[];
 		Resizable: Resizable[];
 		Editors: Editors[];
-		HtmlEditor: Array<Promise<HtmlEditor>>;
-		ScriptEditor: Array<Promise<ScriptEditor>>;
+		HtmlEditor: HtmlEditor[];
+		ScriptEditor: ScriptEditor[];
 	};
 	$refs: {
 		htmlVisibility: HTMLInputElement;
@@ -37,8 +38,8 @@ class App extends Base<AppProps> {
 			LayoutReactive,
 			Resizable,
 			Editors,
-			HtmlEditor: () => import('./components/HtmlEditor.js'),
-			ScriptEditor: () => import('./components/ScriptEditor.js'),
+			HtmlEditor,
+			ScriptEditor,
 		},
 	};
 
@@ -56,6 +57,13 @@ class App extends Base<AppProps> {
 
 	get scriptEditor() {
 		return this.$children.ScriptEditor[0];
+	}
+
+	async mounted() {
+		const [htmlEditor, scriptEditor] = await Promise.all([this.htmlEditor, this.scriptEditor]);
+		htmlEditor.toggle(this.$refs.htmlVisibility.checked);
+		scriptEditor.toggle(this.$refs.scriptVisibility.checked);
+		this.maybeToggleEditorsContainer();
 	}
 
 	async onHtmlVisibilityInput() {

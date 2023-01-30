@@ -5,7 +5,7 @@ import {
 	isDefined,
 	domScheduler,
 } from '@studiometa/js-toolkit/utils';
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api.js';
+import type { editor } from 'monaco-editor/esm/vs/editor/editor.api.js';
 import { themeIsDark, watchTheme } from '../store/index.js';
 
 export interface EditorProps extends BaseProps {}
@@ -44,7 +44,8 @@ export default class Editor extends Base<EditorProps> {
 		return '';
 	}
 
-	mounted() {
+	async mounted() {
+		const { editor } = await import('monaco-editor/esm/vs/editor/editor.api.js');
 		this.editor = editor.create(this.$el, {
 			value: this.initialValue,
 			language: this.language,

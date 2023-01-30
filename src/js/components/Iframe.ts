@@ -1,6 +1,6 @@
 import { Base } from '@studiometa/js-toolkit';
 import type { BaseProps } from '@studiometa/js-toolkit';
-import { nextTick } from '@studiometa/js-toolkit/utils';
+import { nextTick, domScheduler } from '@studiometa/js-toolkit/utils';
 import { getHtml, getScript, watchTheme, themeIsDark } from '../store/index.js';
 import { twigRender } from '../utils/twigRender.js';
 
@@ -45,16 +45,7 @@ export default class Iframe extends Base<IframeProps> {
 </body>`;
 
     // Add Tailwind CDN
-    const tailwindScript = this.doc.createElement('script');
-    tailwindScript.src = 'https://cdn.tailwindcss.com';
-    tailwindScript.id = 'tw';
-    tailwindScript.onload = () => {
-      // Add Tailwind config
-      const tailwindConfig = this.doc.createElement('script');
-      tailwindConfig.textContent = `tailwind.config = { darkMode: 'class' };`;
-      this.doc.head.appendChild(tailwindConfig);
-    }
-    this.doc.head.appendChild(tailwindScript);
+    await this.initTailwind();
 
     // Uncomment to enable dark mode in the preview
     // this.doc.documentElement.classList.toggle('dark', themeIsDark());
@@ -69,7 +60,26 @@ export default class Iframe extends Base<IframeProps> {
     this.doc.head.appendChild(this.script.cloneNode());
 
     await nextTick();
-    this.updateScript(false);
+    await this.updateScript(false);
+
+    this.$el.classList.remove('opacity-0');
+  }
+
+  initTailwind(): Promise<void> {
+    return new Promise((resolve) => {
+      // Add Tailwind CDN
+      const tailwindScript = this.doc.createElement('script');
+      tailwindScript.src = 'https://cdn.tailwindcss.com';
+      tailwindScript.id = 'tw';
+      tailwindScript.onload = () => {
+        // Add Tailwind config
+        const tailwindConfig = this.doc.createElement('script');
+        tailwindConfig.textContent = `tailwind.config = { darkMode: 'class' };`;
+        this.doc.head.appendChild(tailwindConfig);
+        resolve();
+      };
+      this.doc.head.appendChild(tailwindScript);
+    });
   }
 
   async updateHtml() {
@@ -79,19 +89,23 @@ export default class Iframe extends Base<IframeProps> {
       this.doc.body.innerHTML = rendered;
     }
     await nextTick();
-    this.updateScript(false);
+    await this.updateScript(false);
   }
 
-  async updateScript(resetHtml = true) {
+  async updateScript(resetHtml = true): Promise<void> {
     if (resetHtml) {
       this.doc.body.replaceWith(this.doc.body.cloneNode(true));
       await nextTick();
     }
     await nextTick();
-    const clone = this.script.cloneNode();
-    const newScript = getScript();
-    clone.textContent = `${newScript}\ndocument.dispatchEvent(new Event("readystatechange"))`;
-    // @ts-ignore
-    this.window.script.replaceWith(clone);
+
+    return new Promise((resolve) => {
+      const clone = this.script.cloneNode() as HTMLScriptElement;
+      const newScript = getScript();
+      clone.textContent = `${newScript}\ndocument.dispatchEvent(new Event("readystatechange"))`;
+      // @ts-ignore
+      this.window.script.replaceWith(clone);
+      resolve();
+    });
   }
 }
