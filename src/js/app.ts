@@ -8,6 +8,7 @@ import LayoutSwitcher from './components/LayoutSwitcher.js';
 import LayoutReactive from './components/LayoutReactive.js';
 import ThemeSwitcher from './components/ThemeSwitcher.js';
 import Resizable from './components/Resizable.js';
+import Editors from './components/Editors.js';
 
 export interface AppProps extends BaseProps {
 	$children: {
@@ -15,6 +16,7 @@ export interface AppProps extends BaseProps {
 		LayoutSwitcher: LayoutSwitcher[];
 		LayoutReactive: LayoutReactive[];
 		Resizable: Resizable[];
+		Editors: Editors[];
 		HtmlEditor: Array<Promise<HtmlEditor>>;
 		ScriptEditor: Array<Promise<ScriptEditor>>;
 	};
@@ -34,6 +36,7 @@ class App extends Base<AppProps> {
 			LayoutSwitcher,
 			LayoutReactive,
 			Resizable,
+			Editors,
 			HtmlEditor: () => import('./components/HtmlEditor.js'),
 			ScriptEditor: () => import('./components/ScriptEditor.js'),
 		},
@@ -41,6 +44,10 @@ class App extends Base<AppProps> {
 
 	get iframe() {
 		return this.$children.Iframe[0];
+	}
+
+	get editors() {
+		return this.$children.Editors[0];
 	}
 
 	get htmlEditor() {
@@ -54,11 +61,21 @@ class App extends Base<AppProps> {
 	async onHtmlVisibilityInput() {
 		const editor = await this.htmlEditor;
 		editor.toggle(this.$refs.htmlVisibility.checked);
+		this.maybeToggleEditorsContainer();
 	}
 
 	async onScriptVisibilityInput() {
 		const editor = await this.scriptEditor;
 		editor.toggle(this.$refs.scriptVisibility.checked);
+		this.maybeToggleEditorsContainer();
+	}
+
+	maybeToggleEditorsContainer() {
+		if (!this.$refs.htmlVisibility.checked && !this.$refs.scriptVisibility.checked) {
+			this.editors.hide();
+		} else {
+			this.editors.show();
+		}
 	}
 
 	onHtmlEditorContentChange() {
