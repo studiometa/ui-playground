@@ -8,12 +8,14 @@ import type ScriptEditor from './components/ScriptEditor.js';
 import LayoutSwitcher from './components/LayoutSwitcher.js';
 import LayoutReactive from './components/LayoutReactive.js';
 import ThemeSwitcher from './components/ThemeSwitcher.js';
+import Resizable from './components/Resizable.js';
 
 export interface AppProps extends BaseProps {
 	$children: {
 		Iframe: Iframe[];
 		LayoutSwitcher: LayoutSwitcher[];
 		LayoutReactive: LayoutReactive[];
+		Resizable: Resizable[];
 		HtmlEditor: Array<Promise<HtmlEditor>>;
 		ScriptEditor: Array<Promise<ScriptEditor>>;
 	};
@@ -32,6 +34,7 @@ class App extends Base<AppProps> {
 			ThemeSwitcher,
 			LayoutSwitcher,
 			LayoutReactive,
+			Resizable,
 			HtmlEditor: () => import('./components/HtmlEditor.js'),
 			ScriptEditor: () => import('./components/ScriptEditor.js'),
 		},
@@ -65,6 +68,16 @@ class App extends Base<AppProps> {
 
 	onScriptEditorContentChange() {
 		this.iframe.updateScript();
+	}
+
+	onResizableDragged(props) {
+		if (props.mode === 'start') {
+			this.iframe.$el.classList.add('pointer-events-none');
+		}
+
+		if (props.mode === 'drop') {
+			this.iframe.$el.classList.remove('pointer-events-none');
+		}
 	}
 }
 
