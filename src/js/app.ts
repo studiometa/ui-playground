@@ -49,12 +49,12 @@ class App extends Base<AppProps> {
 		return this.$children.ScriptEditor[0];
 	}
 
-	async onHtmlEditorVisibilityInput() {
+	async onHtmlVisibilityInput() {
 		const editor = await this.htmlEditor;
 		editor.toggle(this.$refs.htmlVisibility.checked)
 	}
 
-	async onScriptEditorVisibilityInput() {
+	async onScriptVisibilityInput() {
 		const editor = await this.scriptEditor;
 		editor.toggle(this.$refs.scriptVisibility.checked)
 	}
