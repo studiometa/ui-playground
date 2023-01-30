@@ -1,3 +1,4 @@
+// Thanks to @vue/repl for the zip and unzip functions
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate';
 
 export function zip(data: string): string {
