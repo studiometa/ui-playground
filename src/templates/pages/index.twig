@@ -26,14 +26,15 @@
 		</script>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>UI playground</title>
+		<title>UI Playground</title>
+		<meta name="description" content="Quickly create and share proof of concepts built with @studiometa/ui and @studiometa/js-toolkit.">
 	</head>
 	<body class="group dark:bg-zinc-900 dark:text-white">
 		<main class="fixed top-0 left-0 w-full h-full">
-			<div class="z-10 absolute top-0 flex gap-4 w-full p-2 leading-4 bg-zinc-50 dark:bg-zinc-800 text-sm border-b dark:border-b-zinc-700">
-				UI playground
+			<div class="z-10 absolute top-0 flex gap-8 w-full p-4 leading-4 bg-zinc-100 dark:bg-zinc-800 text-sm dark:border-b-zinc-700">
+				<span class="font-bold">UI Playground</span>
 
-				<div>
+				<div class="flex gap-4">
 					Editors
 					<label for="html-editor">
 						<input
@@ -57,7 +58,7 @@
 					</label>
 				</div>
 
-				<div data-component="LayoutSwitcher">
+				<div data-component="LayoutSwitcher" class="flex gap-4">
 					Layout
 					<label for="layout-horizontal">
 						<input data-ref="inputs[]" type="radio" name="layout" id="layout-horizontal" value="horizontal" checked>
@@ -69,7 +70,7 @@
 					</label>
 				</div>
 
-				<div data-component="ThemeSwitcher">
+				<div data-component="ThemeSwitcher" class="flex gap-4">
 					Theme
 					<label for="theme-light">
 						<input data-ref="inputs[]" type="radio" name="theme" id="theme-light" value="light" checked>
@@ -83,7 +84,7 @@
 			</div>
 			<div data-component="LayoutReactive"
 				data-option-horizontal="flex-col"
-				class="absolute top-8 left-0 right-0 bottom-0 flex flex-col">
+				class="absolute top-12 left-0 right-0 bottom-0 flex flex-col">
 				<div data-component="LayoutReactive"
 					data-option-vertical="h-full border-r dark:border-r-zinc-700"
 					data-option-horizontal="w-full border-b dark:border-b-zinc-700"
