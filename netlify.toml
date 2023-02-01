@@ -1,0 +1,12 @@
+[build]
+  commande = "npm run build"
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@sparticuz/chromium", "puppeteer-core"]
+
+[[redirects]]
+  from = "/__preview/*"
+  to = "/.netlify/functions/og:splat"
+  status = 200

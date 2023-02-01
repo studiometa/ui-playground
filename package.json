@@ -5,13 +5,16 @@
     "postinstall": "patch-package"
   },
   "devDependencies": {
+    "@netlify/functions": "^1.4.0",
     "@studiometa/webpack-config": "^4.2.0-alpha.3",
     "monaco-editor-webpack-plugin": "^7.0.1",
     "patch-package": "^6.5.1"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^110.0.0",
     "@studiometa/js-toolkit": "^2.9.0",
     "fflate": "^0.7.4",
-    "monaco-editor": "^0.34.1"
+    "monaco-editor": "^0.34.1",
+    "puppeteer-core": "^19.6.3"
   }
 }
