@@ -1,6 +1,15 @@
+import { historyReplace } from '@studiometa/js-toolkit/utils';
 import { zip, unzip } from '../utils/zip.js';
 
-const store = new URLSearchParams(location.hash.substr(1));
+if (location.hash && !location.search) {
+	try {
+		const search = new URLSearchParams(location.hash.substr(1));
+		historyReplace({ search });
+		location.hash = '';
+	} catch (err) {}
+}
+
+const store = new URLSearchParams(location.search || location.hash.substr(1));
 
 const storeSetter = store.set.bind(store);
 const storeGetter = store.get.bind(store);
@@ -11,7 +20,7 @@ store.get = (key) => {
 
 store.set = (key, value) => {
 	storeSetter(key, zip(value));
-	location.hash = store.toString();
+	historyReplace({ search: store });
 };
 
 export function getScript() {
