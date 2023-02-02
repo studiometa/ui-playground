@@ -9,6 +9,12 @@ if (location.hash && !location.search) {
 	} catch (err) {}
 }
 
+// Redirect to ui.studiometa.dev
+const url = new URL(location.href);
+url.host = 'ui.studiometa.dev';
+url.pathname = '/play/';
+location.href = url.href;
+
 const store = new URLSearchParams(location.search || location.hash.substr(1));
 
 const storeSetter = store.set.bind(store);
